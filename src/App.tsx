@@ -10,7 +10,7 @@ interface User {
 }
 
 export default function App() {
-  const [user, setUser] = useState<User[] | null>(null);
+  const [user, setUser] = useState<User[]>([]);
   const baseUrl = "https://jsonplaceholder.typicode.com/posts";
   const fetchData = async () => {
     let response = await axios.request({
@@ -23,21 +23,19 @@ export default function App() {
   };
 
   useEffect(() => {
-    console.log("!!!!!!!!");
     fetchData().then();
   }, []);
 
   return (
     <div className="App">
       <h1>This is list posted</h1>
-      {user &&
-        user.map((item) => {
-          return (
-            <p key={item.id}>
-              <a href={`${baseUrl}/${item.id}`}>{item.title}</a>
-            </p>
-          );
-        })}
+      {user.map((item) => {
+        return (
+          <p key={item.id}>
+            <a href={`${baseUrl}/${item.id}`}>{item.title}</a>
+          </p>
+        );
+      })}
     </div>
   );
 }
