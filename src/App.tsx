@@ -1,41 +1,17 @@
 import "./styles.css";
-import { useState, useEffect } from "react";
-import axios from "axios";
-
-interface User {
-  id: number;
-  userId: number;
-  title: string;
-  body: string;
-}
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Home } from "./component/home";
+import { Detail } from "./component/detail";
 
 export default function App() {
-  const [user, setUser] = useState<User[]>([]);
-  const baseUrl = "https://jsonplaceholder.typicode.com/posts";
-  const fetchData = async () => {
-    let response = await axios.request({
-      url: baseUrl,
-      method: "get"
-    });
-    if (response.status === 200) {
-      setUser(response.data);
-    }
-  };
-
-  useEffect(() => {
-    fetchData().then();
-  }, []);
-
   return (
     <div className="App">
-      <h1>This is list posted</h1>
-      {user.map((item) => {
-        return (
-          <p key={item.id}>
-            <a href={`${baseUrl}/${item.id}`}>{item.title}</a>
-          </p>
-        );
-      })}
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/detail/:id" element={<Detail />} />
+        </Routes>
+      </BrowserRouter>
     </div>
   );
 }
